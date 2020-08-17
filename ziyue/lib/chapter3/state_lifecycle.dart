@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ziyue/chapter3/cupertino_test_route.dart';
 
 import '../intermediate_page.dart';
 
@@ -70,8 +71,17 @@ class CounterWidgetState extends State<CounterWidget> {
                 },
               ),
               RaisedButton(
-                child: Text("在Widget树中获取State对象"),
+                child: Text("ScaffoldState"),
                 onPressed: () => getStateInWidget(context),
+              ),
+              RaisedButton(
+                child: Text("CupertinoDemo"),
+                onPressed: () {
+                  Navigator.push(context,
+                      new MaterialPageRoute(builder: (context) {
+                        return CupertinoTestRoute();
+                      }));
+                },
               ),
             ],
           );

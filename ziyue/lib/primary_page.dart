@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ziyue/chapter3/chapter3.dart';
 
 import 'chapter3/state_lifecycle.dart';
 
@@ -22,7 +23,7 @@ class PrimaryPage extends StatelessWidget {
               new RaisedButton(
                 onPressed: () async {
                   var result = await Navigator.push(context, new MaterialPageRoute(
-                    builder: (context) => new CounterWidget(),
+                    builder: (context) => new Chapter3(),
                   ));
                   print("路由返回值：$result");
                 },
