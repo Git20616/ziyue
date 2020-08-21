@@ -133,6 +133,7 @@ class TextFontStyle extends StatelessWidget {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Icon(
                 IconData(
@@ -140,6 +141,19 @@ class TextFontStyle extends StatelessWidget {
                   fontFamily: "IconFont",
                 ),
                 size: 30.0,
+                color: Colors.green,
+              ),
+              Text(
+                "使用自定义字体库fujinormal",
+                style: TextStyle(
+                  fontFamily: "Narcissus",
+                ),
+              ),
+              Text(
+                "使用自定义字体库yuweixingshu",
+                style: TextStyle(
+                  fontFamily: "Peony",
+                ),
               ),
             ],
           ),
