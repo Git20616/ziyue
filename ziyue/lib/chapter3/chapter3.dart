@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:ziyue/chapter3/some_button.dart';
 import 'package:ziyue/chapter3/state_lifecycle.dart';
 import 'package:ziyue/chapter3/state_manage.dart';
+import 'package:ziyue/chapter3/switch_checkbox.dart';
 import 'package:ziyue/chapter3/text_font_style.dart';
+import 'package:ziyue/chapter3/text_form.dart';
 
 import 'Image_icon.dart';
 
@@ -106,7 +108,42 @@ class Chapter3 extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return SwitchAndCheckBoxText();
+                      },
+                    ));
+                  },
+                  child: Text(
+                    "单选框与复选框",
+                    style: TextStyle(
+                      fontFamily: "peony",
+                    ),
+                  ),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return TextAndFormTest();
+                      },
+                    ));
+                  },
+                  child: Text(
+                    "输入框与表单",
+                    style: TextStyle(
+                      fontFamily: "peony",
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
