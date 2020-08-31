@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ziyue/chapter3/some_button.dart';
+import 'package:ziyue/chapter3/some_progress.dart';
 import 'package:ziyue/chapter3/state_lifecycle.dart';
 import 'package:ziyue/chapter3/state_manage.dart';
 import 'package:ziyue/chapter3/switch_checkbox.dart';
@@ -137,6 +138,21 @@ class Chapter3 extends StatelessWidget {
                   },
                   child: Text(
                     "输入框与表单",
+                    style: TextStyle(
+                      fontFamily: "peony",
+                    ),
+                  ),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return SomeProgress();
+                      },
+                    ));
+                  },
+                  child: Text(
+                    "进度指示器",
                     style: TextStyle(
                       fontFamily: "peony",
                     ),
