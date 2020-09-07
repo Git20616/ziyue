@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ziyue/chapter4/some_flexbox_layout.dart';
 import 'package:ziyue/chapter4/some_linear_layout.dart';
+import 'package:ziyue/chapter4/wrap_and_flow.dart';
 
 class Chapter4 extends StatelessWidget {
   @override
@@ -20,6 +22,22 @@ class Chapter4 extends StatelessWidget {
                   ));
                 },
                 child: Text("线性布局"),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => SomeFlexboxLayout(),
+                  ));
+                },
+                child: Text("弹性布局"),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => WrapAndFlow(),
+                  ));
+                },
+                child: Text("流式布局"),
               ),
             ],
           ),
