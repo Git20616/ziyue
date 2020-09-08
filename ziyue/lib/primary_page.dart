@@ -3,6 +3,7 @@ import 'package:ziyue/chapter3/chapter3.dart';
 import 'package:ziyue/chapter4/chapter4.dart';
 
 import 'chapter3/state_lifecycle.dart';
+import 'chapter5/chapter5.dart';
 
 class PrimaryPage extends StatelessWidget {
   @override
@@ -39,6 +40,19 @@ class PrimaryPage extends StatelessWidget {
                   ));
                 },
                 child: Text("布局类组件"),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => Chapter5(),
+                  ));
+                },
+                child: Text("容器类组件"),
               ),
             ],
           ),

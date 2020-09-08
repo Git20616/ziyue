@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ziyue/chapter4/about_align.dart';
 import 'package:ziyue/chapter4/some_flexbox_layout.dart';
+import 'package:ziyue/chapter4/some_frame_layout.dart';
 import 'package:ziyue/chapter4/some_linear_layout.dart';
 import 'package:ziyue/chapter4/wrap_and_flow.dart';
 
@@ -13,7 +15,7 @@ class Chapter4 extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               FlatButton(
                 onPressed: () {
@@ -39,9 +41,30 @@ class Chapter4 extends StatelessWidget {
                 },
                 child: Text("流式布局"),
               ),
+
             ],
           ),
-
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => SomeFrameLayout(),
+                  ));
+                },
+                child: Text("层叠布局"),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => AboutAlign(),
+                  ));
+                },
+                child: Text("对齐与相对定位"),
+              ),
+            ],
+          ),
         ],
       ),
     );
