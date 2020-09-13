@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ziyue/chapter5/about_padding.dart';
+import 'package:ziyue/chapter5/some_size_container.dart';
 
 class Chapter5 extends StatelessWidget {
   @override
@@ -24,7 +25,7 @@ class Chapter5 extends StatelessWidget {
             FlatButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => null,
+                  builder: (context) => SomeSizeContainer(),
                 ));
               },
               child: Text("尺寸限制类容器"),
