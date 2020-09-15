@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class AboutTransform extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text("变换TransForm"),),
+      appBar: AppBar(
+        title: Text("变换TransForm"),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -34,11 +37,56 @@ class AboutTransform extends StatelessWidget {
                 ),
               ),
             ),
-
+            DecoratedBox(
+              decoration: BoxDecoration(
+                color: Colors.red,
+              ),
+              child: Transform.rotate(
+                angle: pi / 2.0,
+                child: Container(
+                  color: Colors.blue,
+                  width: 120.0,
+                  height: 40.0,
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                DecoratedBox(
+                  decoration: BoxDecoration(color: Colors.green[200]),
+                  child: Transform.scale(
+                    scale: 1.5,
+                    child: Text("Hello world"),
+                  ),
+                ),
+                // 矩阵变化只会作用在绘制阶段
+                // Transform的变换是应用在绘制阶段，而并不是应用在布局(layout)阶段，
+                // 所以无论对子组件应用何种变化，其占用空间的大小和在屏幕上的位置都是固定不变的
+                // 下面的Text组件会被遮挡
+                Text(
+                  "你好",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                DecoratedBox(
+                  decoration: BoxDecoration(color: Colors.green[200]),
+                  // RotatedBox的变换是在layout阶段，会影响在子组件的位置和大小。
+                  child: RotatedBox(
+                    quarterTurns: 1, // 旋转90度（1/4圈）
+                    child: Text("RotatedBox"),
+                  ),
+                ),
+                Text("你好"),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
-
 }

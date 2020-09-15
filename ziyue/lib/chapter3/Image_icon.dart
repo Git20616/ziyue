@@ -51,7 +51,7 @@ class ImageAndIcon extends StatelessWidget {
                 fit: BoxFit.fill,
               ),
               Image(
-                image: _img2,
+                image: _img,
                 height: 50.0,
                 width: 100.0,
                 fit: BoxFit.contain,
