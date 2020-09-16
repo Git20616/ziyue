@@ -4,6 +4,7 @@ import 'package:ziyue/chapter5/about_decorated_box.dart';
 import 'package:ziyue/chapter5/about_padding.dart';
 import 'package:ziyue/chapter5/about_transform.dart';
 import 'package:ziyue/chapter5/one_route_page.dart';
+import 'package:ziyue/chapter5/some_clip.dart';
 import 'package:ziyue/chapter5/some_size_container.dart';
 
 class Chapter5 extends StatelessWidget {
@@ -65,6 +66,14 @@ class Chapter5 extends StatelessWidget {
                 ));
               },
               child: Text("Scaffold,TabBar,底部导航"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => SomeClip(),
+                ));
+              },
+              child: Text("剪裁Clip"),
             ),
           ],
         ),

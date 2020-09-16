@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ziyue/chapter3/chapter3.dart';
 import 'package:ziyue/chapter4/chapter4.dart';
+import 'package:ziyue/chapter6/chapter6.dart';
 
 import 'chapter3/state_lifecycle.dart';
 import 'chapter5/chapter5.dart';
@@ -53,6 +54,14 @@ class PrimaryPage extends StatelessWidget {
                   ));
                 },
                 child: Text("容器类组件"),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => Chapter6(),
+                  ));
+                },
+                child: Text("可滚动组件"),
               ),
             ],
           ),
