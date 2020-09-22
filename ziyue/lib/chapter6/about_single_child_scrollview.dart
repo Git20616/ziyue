@@ -10,12 +10,12 @@ class AboutSingleChildScrollView extends StatelessWidget {
       appBar: AppBar(
         title: Text("SingleChildScrollView"),
       ),
-      body: Scrollbar(
+      body: Scrollbar( //显示进度条
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16.0),
           child: Center(
             child: Column(
-              children: _str
+              children: _str //动态创建List<Widget>
                   .split("")
                   .map((item) => Text(
                         item,

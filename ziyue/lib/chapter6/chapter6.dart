@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ziyue/chapter6/about_listview_a.dart';
 import 'package:ziyue/chapter6/about_single_child_scrollview.dart';
 
 class Chapter6 extends StatelessWidget {
@@ -19,6 +20,14 @@ class Chapter6 extends StatelessWidget {
                 ));
               },
               child: Text("SingleChildScrollView"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => AboutListViewA(),
+                ));
+              },
+              child: Text("一个简单的ListView"),
             ),
           ],
         ),
