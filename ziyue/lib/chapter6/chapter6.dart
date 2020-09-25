@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ziyue/chapter6/about_gridview_a.dart';
 import 'package:ziyue/chapter6/about_listview_a.dart';
+import 'package:ziyue/chapter6/about_listview_b.dart';
+import 'package:ziyue/chapter6/about_listview_c.dart';
 import 'package:ziyue/chapter6/about_single_child_scrollview.dart';
 
 class Chapter6 extends StatelessWidget {
@@ -28,6 +31,30 @@ class Chapter6 extends StatelessWidget {
                 ));
               },
               child: Text("一个简单的ListView"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => AboutListViewB(),
+                ));
+              },
+              child: Text("无线加载的ListView"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => AboutListViewC(),
+                ));
+              },
+              child: Text("带表头的列表"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => AboutGridViewA(),
+                ));
+              },
+              child: Text("二维网格列表GridView"),
             ),
           ],
         ),

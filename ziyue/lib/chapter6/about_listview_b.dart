@@ -1,4 +1,5 @@
 import 'package:english_words/english_words.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AboutListViewB extends StatefulWidget {
@@ -10,7 +11,7 @@ class AboutListViewB extends StatefulWidget {
 }
 
 class AboutListViewBState extends State<AboutListViewB> {
-  static const loadingTag = "##loading##"; //表尾标记
+  static const String loadingTag = "##loading##"; //表尾标记
   List _words = <String>[loadingTag];
 
   @override
@@ -29,8 +30,28 @@ class AboutListViewBState extends State<AboutListViewB> {
         itemBuilder: (BuildContext context, int index) {
           // 如果到了表尾
           if (_words[index] == loadingTag) {
-            // 不足100条，继续获取数据
-
+            // 不足100条，继续获取数据，表尾标记不计入在内
+            if(_words.length < 101) {
+              // 获取数据
+              _retrieveData();
+              // 加载时显示loading
+              return Container(
+                padding: EdgeInsets.all(16.0),
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: 24.0,
+                  height: 24.0,
+                  child: CircularProgressIndicator(strokeWidth: 2.0,),
+                ),
+              );
+            } else {
+              // 加载100条数据后不再获取数据
+              return Container(
+                padding: EdgeInsets.all(16.0),
+                alignment: Alignment.center,
+                child: Text("没有更多了", style: TextStyle(color: Colors.grey),),
+              );
+            }
           }
           return ListTile(
             title: Text(_words[index]),
