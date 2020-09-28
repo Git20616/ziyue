@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:ziyue/chapter6/about_custom_scrollview.dart';
 import 'package:ziyue/chapter6/about_gridview_a.dart';
+import 'package:ziyue/chapter6/about_gridview_b.dart';
 import 'package:ziyue/chapter6/about_listview_a.dart';
 import 'package:ziyue/chapter6/about_listview_b.dart';
 import 'package:ziyue/chapter6/about_listview_c.dart';
+import 'package:ziyue/chapter6/about_scroll_controller.dart';
+import 'package:ziyue/chapter6/about_scroll_notification.dart';
 import 'package:ziyue/chapter6/about_single_child_scrollview.dart';
 
 class Chapter6 extends StatelessWidget {
@@ -55,6 +59,38 @@ class Chapter6 extends StatelessWidget {
                 ));
               },
               child: Text("二维网格列表GridView"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => AboutGridViewB(),
+                ));
+              },
+              child: Text("GridView.builder"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => AboutCustomScrollView(),
+                ));
+              },
+              child: Text("CustomScrollView"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => AboutScrollController(),
+                ));
+              },
+              child: Text("ScrollController"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => AboutScrollNotification(),
+                ));
+              },
+              child: Text("滚动监听"),
             ),
           ],
         ),
