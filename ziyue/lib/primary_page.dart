@@ -5,6 +5,7 @@ import 'package:ziyue/chapter6/chapter6.dart';
 
 import 'chapter3/state_lifecycle.dart';
 import 'chapter5/chapter5.dart';
+import 'chapter7/chapter7.dart';
 
 class PrimaryPage extends StatelessWidget {
   @override
@@ -62,6 +63,14 @@ class PrimaryPage extends StatelessWidget {
                   ));
                 },
                 child: Text("可滚动组件"),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => Chapter7(),
+                  ));
+                },
+                child: Text("功能型组件"),
               ),
             ],
           ),

@@ -6,7 +6,6 @@ class AboutScrollNotification extends StatefulWidget {
     // TODO: implement createState
     return AboutScrollNotificationState();
   }
-
 }
 
 class AboutScrollNotificationState extends State<AboutScrollNotification> {
@@ -16,10 +15,11 @@ class AboutScrollNotificationState extends State<AboutScrollNotification> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text("ScrollNotification"),),
+      appBar: AppBar(
+        title: Text("ScrollNotification"),
+      ),
       body: Scrollbar(
         child: NotificationListener<ScrollNotification>(
-          // ignore: missing_return
           onNotification: (ScrollNotification nf) {
             // metrics属性
             // pixels：当前滚动位置。
@@ -33,12 +33,32 @@ class AboutScrollNotificationState extends State<AboutScrollNotification> {
               _progress = "${(progress * 100).toInt()}%";
             });
             print("BottomEdge: ${nf.metrics.extentAfter}");
-            //return true; //放开此行注释后，进度条将失效
+            return false; //返回true，进度条将失效
           },
-          child: Stack(),
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              ListView.builder(
+                itemCount: 100,
+                itemExtent: 50.0,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text("list item $index"),
+                    onTap: () {
+                      print("item $index on tap");
+                    },
+                  );
+                },
+              ),
+              CircleAvatar(
+                radius: 30.0,
+                backgroundColor: Colors.blue,
+                child: Text(_progress),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
-
 }
