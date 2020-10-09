@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ziyue/chapter7/about_will_pop_scope.dart';
 import 'package:ziyue/chapter7/test_inherited.dart';
+import 'package:ziyue/chapter7/test_provider.dart';
 
 class Chapter7 extends StatelessWidget {
   @override
@@ -34,6 +35,22 @@ class Chapter7 extends StatelessWidget {
                     ));
               },
               child: Text("数据共享"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProviderRoute(),
+                    ));
+              },
+              child: Text("跨组件数据共享"),
+            ),
+            FlatButton(
+              onPressed: () {
+
+              },
+              child: Text("颜色与主题"),
             ),
           ],
         ),

@@ -9,8 +9,9 @@ class ShareDataWidget extends InheritedWidget {
   /// 提供of方法，方便子树中的widget获取数据
   static ShareDataWidget of(BuildContext context) {
     // 调用dependOnInheritedWidgetOfExactType() 和 getElementForInheritedWidgetOfExactType()的区别就是前者会注册依赖关系，而后者不会
-//    return context.dependOnInheritedWidgetOfExactType<ShareDataWidget>();
-    return context.getElementForInheritedWidgetOfExactType<ShareDataWidget>().widget;
+   // return context.dependOnInheritedWidgetOfExactType<ShareDataWidget>();
+   //  return context.getElementForInheritedWidgetOfExactType<ShareDataWidget>().widget;
+    return context.ancestorInheritedElementForWidgetOfExactType(ShareDataWidget).widget;
   }
 
   // 该回调方法决定当data发生变化时，是否通知子树中依赖data的widget
