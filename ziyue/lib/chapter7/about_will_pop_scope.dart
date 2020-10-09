@@ -20,6 +20,7 @@ class AboutWillPopScopeState extends State<AboutWillPopScope> {
       ),
       body: Builder(
         builder: (BuildContext context) {
+
           return WillPopScope(
             onWillPop: () async {
               // 两次点击超过1秒，则重新计时

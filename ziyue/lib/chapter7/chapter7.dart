@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ziyue/chapter7/about_will_pop_scope.dart';
+import 'package:ziyue/chapter7/test_inherited.dart';
 
 class Chapter7 extends StatelessWidget {
   @override
@@ -23,6 +24,16 @@ class Chapter7 extends StatelessWidget {
                     ));
               },
               child: Text("导航返回拦截"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TestInheritRoute(),
+                    ));
+              },
+              child: Text("数据共享"),
             ),
           ],
         ),
