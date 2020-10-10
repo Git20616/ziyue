@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ziyue/chapter7/about_will_pop_scope.dart';
+import 'package:ziyue/chapter7/future_and_stream.dart';
+import 'package:ziyue/chapter7/some_dialog.dart';
 import 'package:ziyue/chapter7/test_inherited.dart';
 import 'package:ziyue/chapter7/test_provider.dart';
+import 'package:ziyue/chapter7/test_theme.dart';
 
 class Chapter7 extends StatelessWidget {
   @override
@@ -48,9 +51,27 @@ class Chapter7 extends StatelessWidget {
             ),
             FlatButton(
               onPressed: () {
-
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => TestTheme(),
+                ));
               },
               child: Text("颜色与主题"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => FutureAndStream(),
+                ));
+              },
+              child: Text("异步UI更新"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => SomeDialog(),
+                ));
+              },
+              child: Text("对话框详解"),
             ),
           ],
         ),
