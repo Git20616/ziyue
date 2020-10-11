@@ -1,16 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:ziyue/chapter7/dialog_checkbox.dart';
 
 class SomeDialog extends StatelessWidget {
   // 自定义对话框打开动画及遮罩
-  Future<T> showCustomDialog<T>({
+  Future<T> customDialog<T>({
     @required BuildContext context,
     bool barrierDismissible = true,
     WidgetBuilder builder,
   }) {
     final ThemeData themeData = Theme.of(context, shadowThemeOnly: true);
+    // showDialog方法是showGeneralDialog方法的封装
     return showGeneralDialog(
-      context: null,
-      pageBuilder: null,
+      context: context,
+      //构建对话框内部UI
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        final Widget pageChild = Builder(
+          builder: builder,
+        );
+        return SafeArea(
+          child: Builder(
+            builder: (BuildContext context) {
+              return themeData != null
+                  ? Theme(
+                      data: themeData,
+                      child: pageChild,
+                    )
+                  : pageChild;
+            },
+          ),
+        );
+      },
+      barrierDismissible: barrierDismissible, //点击遮罩是否关闭对话框
+      barrierLabel: MaterialLocalizations.of(context)
+          .modalBarrierDismissLabel, //语义化标签（用于读屏软件）
+      barrierColor: Colors.black87, //自定义遮罩颜色
+      transitionDuration: const Duration(milliseconds: 200),
+      transitionBuilder: _buildMaterialDdialogTransitions, //对话框打开/关闭的动画
+    );
+  }
+
+  // 构建转换动画，也可以直接用匿名方法
+  Widget _buildMaterialDdialogTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    //使用缩放动画
+    return ScaleTransition(
+      scale: CurvedAnimation(
+        curve: Curves.ease,
+        parent: animation,
+      ),
+      child: child,
     );
   }
 
@@ -126,7 +169,80 @@ class SomeDialog extends StatelessWidget {
       }
     }
 
-    //
+    // 自定义打开对话框动画及遮罩
+    Future<void> showCustomDialog() async {
+      bool delete = await customDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("提示"),
+            content: Text("您确定要删除当前文件吗?"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("取消"),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              FlatButton(
+                child: Text("删除"),
+                onPressed: () {
+                  // 执行删除操作
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          );
+        },
+      );
+      if (delete == null) {
+        print("取消删除");
+      } else {
+        print("确认删除");
+      }
+    }
+
+    // 单独抽离出StatefulWidget
+    Future<bool> showDialogCheckbox() async {
+      bool _value = false; //记录复选框选中状态
+      return showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("提示"),
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text("您确定要删除当前文件吗？"),
+                Row(
+                  children: <Widget>[
+                    Text("同时删除子目录？"),
+                    DialogCheckbox(
+                      value: _value,
+                      onChanged: (bool v) {
+                        _value = !_value; //更新选中状态
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("取消"),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              FlatButton(
+                child: Text("删除"),
+                onPressed: () {
+                  // 将选中状态返回
+                  Navigator.of(context).pop(_value);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -160,6 +276,22 @@ class SomeDialog extends StatelessWidget {
             RaisedButton(
               onPressed: () => showListDialog(),
               child: Text("ListDialog"),
+            ),
+            RaisedButton(
+              onPressed: () => showCustomDialog(),
+              child: Text("自定义弹出动画与遮罩"),
+            ),
+            RaisedButton(
+              onPressed: () {},
+              child: Text("单独抽离出StatefulWidget"),
+            ),
+            RaisedButton(
+              onPressed: () {},
+              child: Text("对话框状态管理2"),
+            ),
+            RaisedButton(
+              onPressed: () {},
+              child: Text("对话框状态管理3"),
             ),
           ],
         ),
