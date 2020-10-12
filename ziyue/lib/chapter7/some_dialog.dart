@@ -200,16 +200,16 @@ class SomeDialog extends StatelessWidget {
       }
     }
 
-    // 单独抽离出StatefulWidget
-    Future<bool> showDialogCheckbox() async {
+    // #1 单独抽离出StatefulWidget，这里指DialogCheckbox
+    Future<int> showDialogCheckbox() {
       bool _value = false; //记录复选框选中状态
-      return showDialog<bool>(
+      return showDialog<int>(
         context: context,
         builder: (context) {
           return AlertDialog(
             title: Text("提示"),
             content: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text("您确定要删除当前文件吗？"),
@@ -229,14 +229,153 @@ class SomeDialog extends StatelessWidget {
             actions: <Widget>[
               FlatButton(
                 child: Text("取消"),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () =>
+                    Navigator.of(context).pop(_value ? 1 : 0), //01 00
               ),
               FlatButton(
                 child: Text("删除"),
                 onPressed: () {
-                  // 将选中状态返回
-                  Navigator.of(context).pop(_value);
+                  // 将选中状态与按钮点击状态返回
+                  Navigator.of(context).pop(_value ? 3 : 2); //11 10
                 },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    // #2 使用StatefulBuilder方法
+    Future<int> showDialogCheckbox2() {
+      bool _value = false; //记录复选框选中状态
+      return showDialog<int>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("提示"),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text("您确定要删除当前文件吗？"),
+                Row(
+                  children: <Widget>[
+                    Text("同时删除子目录？"),
+                    //与#1不同的是，这里使用_StatefulBuilder来构建StatefulWidget上下文
+                    _StatefulBuilder(
+                      builder: (context, _setState) {
+                        return Checkbox(
+                          value: _value,
+                          onChanged: (bool v) {
+                            //_setState方法实际就是该StatefulWidget的setState方法，
+                            //调用后builder方法会重新被调用
+                            _setState(() {
+                              _value = !_value;
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("取消"),
+                onPressed: () =>
+                    Navigator.of(context).pop(_value ? 1 : 0), //01 00
+              ),
+              FlatButton(
+                child: Text("删除"),
+                onPressed: () {
+                  // 将选中状态与按钮点击状态返回
+                  Navigator.of(context).pop(_value ? 3 : 2); //11 10
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    // #3 使用markNeedsBuild()标记需要更新的UI
+    Future<int> showDialogCheckbox3() {
+      bool _value = false; //记录复选框选中状态
+      return showDialog<int>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("提示"),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text("您确定要删除当前文件吗？"),
+                Row(
+                  children: <Widget>[
+                    Text("同时删除子目录？"),
+                    // Checkbox(
+                    //   value: _value,
+                    //   onChanged: (bool v) {
+                    //     // 此时context为对话框UI的根Element，我们直接将对话框UI对应的Element标记为dirty
+                    //     (context as Element).markNeedsBuild();
+                    //     _value = !_value;
+                    //   },
+                    // ),
+                    Builder(
+                      builder: (context) {
+                        return Checkbox(
+                          value: _value,
+                          onChanged: (bool v) {
+                            // 这是最优解，将context的范围缩小，只标记Checkbox的Element
+                            (context as Element).markNeedsBuild();
+                            _value = !_value;
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("取消"),
+                onPressed: () =>
+                    Navigator.of(context).pop(_value ? 1 : 0), //01 00
+              ),
+              FlatButton(
+                child: Text("删除"),
+                onPressed: () {
+                  // 将选中状态与按钮点击状态返回
+                  Navigator.of(context).pop(_value ? 3 : 2); //11 10
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    // Material风格的底部菜单列表模态对话框
+    Future<int> _showModalBottomSheet() {
+        return showModalBottomSheet<int>(
+        context: context,
+        builder: (BuildContext context) {
+          return Column(
+            children: <Widget>[
+              ListTile(title: Text("showModalBottomSheet"),),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 30,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: Text("$index"),
+                      onTap: () => Navigator.of(context).pop(index),
+                    );
+                  },
+                ),
               ),
             ],
           );
@@ -251,6 +390,7 @@ class SomeDialog extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             RaisedButton(
               onPressed: () async {
@@ -282,20 +422,79 @@ class SomeDialog extends StatelessWidget {
               child: Text("自定义弹出动画与遮罩"),
             ),
             RaisedButton(
-              onPressed: () {},
-              child: Text("单独抽离出StatefulWidget"),
+              onPressed: () async {
+                int _state = await showDialogCheckbox();
+                if (_state != null) {
+                  print("$_state");
+                } else {
+                  print("取消操作");
+                }
+              },
+              child: Text("#1单独抽离出StatefulWidget"),
+            ),
+            RaisedButton(
+              onPressed: () async {
+                int _state = await showDialogCheckbox2();
+                if (_state != null) {
+                  print("$_state");
+                } else {
+                  print("取消操作");
+                }
+              },
+              child: Text("#2自定义StatefulBuilder"),
+            ),
+            RaisedButton(
+              onPressed: () async {
+                int _state = await showDialogCheckbox3();
+                if (_state != null) {
+                  print("$_state");
+                } else {
+                  print("取消操作");
+                }
+              },
+              child: Text("#3对话框状态管理最优解"),
+            ),
+            RaisedButton(
+              onPressed: () async {
+                int type = await _showModalBottomSheet();
+                print(type);
+              },
+              child: Text("底部菜单列表1"),
             ),
             RaisedButton(
               onPressed: () {},
-              child: Text("对话框状态管理2"),
+              child: Text("底部菜单列表2"),
             ),
             RaisedButton(
               onPressed: () {},
-              child: Text("对话框状态管理3"),
+              child: Text("日期选择框"),
             ),
           ],
         ),
       ),
     );
+  }
+}
+
+// 仿照Builder封装StatefulBuilder
+class _StatefulBuilder extends StatefulWidget {
+  final StatefulWidgetBuilder builder;
+
+  const _StatefulBuilder({
+    Key key,
+    @required this.builder,
+  })  : assert(builder != null),
+        super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _StatefulBuilderState();
+  }
+}
+
+class _StatefulBuilderState extends State<_StatefulBuilder> {
+  @override
+  Widget build(BuildContext context) {
+    return widget.builder(context, setState);
   }
 }
