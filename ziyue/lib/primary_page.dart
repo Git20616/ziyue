@@ -3,7 +3,6 @@ import 'package:ziyue/chapter3/chapter3.dart';
 import 'package:ziyue/chapter4/chapter4.dart';
 import 'package:ziyue/chapter6/chapter6.dart';
 
-import 'chapter3/state_lifecycle.dart';
 import 'chapter5/chapter5.dart';
 import 'chapter7/chapter7.dart';
 
