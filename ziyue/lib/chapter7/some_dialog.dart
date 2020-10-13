@@ -490,17 +490,19 @@ class SomeDialog extends StatelessWidget {
       return showCupertinoModalPopup(
         context: context,
         builder: (BuildContext context) {
-          return SizedBox(
-            height: 200,
-            child: CupertinoDatePicker(
-              mode: CupertinoDatePickerMode.dateAndTime,
-              minimumDate: date,
-              maximumDate: date.add(Duration(days: 30)),
-              maximumYear: date.year + 1,
-              onDateTimeChanged: (DateTime value) {
-                print(value);
-              },
-              backgroundColor: Color(0xFFFFFFFF),
+          return Container(
+            color: Color(0xFFFFFFFF),
+            child: SizedBox(
+              height: 200,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.dateAndTime,
+                minimumDate: date,
+                maximumDate: date.add(Duration(days: 30)),
+                maximumYear: date.year + 1,
+                onDateTimeChanged: (DateTime value) {
+                  print(value);
+                },
+              ),
             ),
           );
         },

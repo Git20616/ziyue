@@ -79,41 +79,47 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(_title[_currentIndex]),
-        backgroundColor: _colors[_currentIndex],
+    return MaterialApp(
+      title: "Flutter Demo",
+      theme: ThemeData(
+        primarySwatch: _colors[_currentIndex],
       ),
-      body: _pages[_currentIndex],
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-        backgroundColor: _colors[_currentIndex],
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-      persistentFooterButtons: <Widget>[
-        RaisedButton(
-          onPressed: () {},
-          child: Text("底部1"),
-          color: _colors[_currentIndex],
-          textColor: Colors.white,
+      home: Scaffold(
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(_title[_currentIndex]),
+          backgroundColor: _colors[_currentIndex],
         ),
-        RaisedButton(
-          onPressed: () {},
-          child: Text("底部2"),
-          color: _colors[_currentIndex],
-          textColor: Colors.white,
+        body: _pages[_currentIndex],
+        floatingActionButton: FloatingActionButton(
+          onPressed: _incrementCounter,
+          tooltip: 'Increment',
+          child: Icon(Icons.add),
+          backgroundColor: _colors[_currentIndex],
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+        persistentFooterButtons: <Widget>[
+          RaisedButton(
+            onPressed: () {},
+            child: Text("底部1"),
+            color: _colors[_currentIndex],
+            textColor: Colors.white,
+          ),
+          RaisedButton(
+            onPressed: () {},
+            child: Text("底部2"),
+            color: _colors[_currentIndex],
+            textColor: Colors.white,
+          ),
+        ],
+        bottomNavigationBar: BottomNavigationBar(
+          items: _bottomNavItems,
+          currentIndex: _currentIndex,
+          type: BottomNavigationBarType.shifting,
+          onTap: (index) {
+            _changePage(index);
+          },
         ),
-      ],
-      bottomNavigationBar: BottomNavigationBar(
-        items: _bottomNavItems,
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.shifting,
-        onTap: (index) {
-          _changePage(index);
-        },
       ),
     );
   }
