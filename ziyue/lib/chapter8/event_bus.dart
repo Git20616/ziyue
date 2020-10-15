@@ -23,4 +23,30 @@ class EventBus {
     _emap[eventName].add(callBack);
   }
 
+  // 移除订阅者
+  void off(String eventName, [EventCallBack callBack]) {
+    //1.对象就是传引用
+    //2.原始类型就是传值
+    //3.String等immutable类型因为没有提供自身修改的函数，每次操作都是新生成一个对象，所以要特殊对待。可以认为是传值。
+    List<EventCallBack> list = _emap[eventName];
+    if(eventName == null || list == null) return;
+    if(callBack == null) {
+      _emap[eventName] = null;
+    } else {
+      list.remove(callBack);
+    }
+  }
+
+  // 触发事件，事件触发后，该事件的所有订阅者都会被调用
+  void emit(String eventName, [arg]) {
+    var list = _emap[eventName];
+    if(list == null) return;
+    //反向遍历，防止订阅者在回调中移除自身带来的下标错位
+    for(int i = list.length - 1; i >= 0; --i) {
+      list[i](arg);
+    }
+  }
 }
+
+// 定义一个top-level（全局）变量，页面引入该文件后可以直接使用bus
+EventBus bus = new EventBus();

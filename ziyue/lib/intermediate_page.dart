@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ziyue/chapter8/chapter8.dart';
+import 'package:ziyue/chapter9/Chapter9.dart';
 
 class IntermediatePage extends StatelessWidget {
   @override
@@ -19,6 +20,14 @@ class IntermediatePage extends StatelessWidget {
                   ));
             },
             child: Text("事件处理与通知"),
+          ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => Chapter9(),
+              ));
+            },
+            child: Text("动画"),
           ),
         ],
       ),
