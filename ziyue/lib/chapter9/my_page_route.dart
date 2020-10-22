@@ -47,7 +47,7 @@ class MyPageRoute extends PageRoute {
         child: builder1(context),
       );
     } else {
-      return Padding(padding: EdgeInsets.zero,);
+      return Padding(padding: EdgeInsets.zero,);//非活跃状态无动画
     }
 
   }

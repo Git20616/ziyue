@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ziyue/chapter9/test_animated_switcher.dart';
 import 'package:ziyue/chapter9/test_base_animation.dart';
 import 'package:ziyue/chapter9/test_hero_animation.dart';
 import 'package:ziyue/chapter9/test_route_animation.dart';
@@ -45,6 +46,17 @@ class Chapter9 extends StatelessWidget {
                 ));
               },
               child: Text("交织动画"),
+            ),
+            RaisedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => Scaffold(
+                    appBar: AppBar(title: Text("AnimatedSwitcher"),),
+                    body: TestAnimatedSwitcher(),
+                  ),
+                ));
+              },
+              child: Text("通用动画切换组件"),
             ),
           ],
         ),
