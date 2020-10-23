@@ -23,7 +23,8 @@ class AnimatedDecoratedBox1 extends StatefulWidget {
   }
 }
 
-class AnimatedDecoratedBox1State extends State<AnimatedDecoratedBox1> with SingleTickerProviderStateMixin{
+class AnimatedDecoratedBox1State extends State<AnimatedDecoratedBox1>
+    with SingleTickerProviderStateMixin {
   @required
   AnimationController get controller => _controller;
   AnimationController _controller;
@@ -36,11 +37,14 @@ class AnimatedDecoratedBox1State extends State<AnimatedDecoratedBox1> with Singl
   @override
   void initState() {
     super.initState();
+    //初始化
     _controller = AnimationController(
       duration: widget.duration,
       reverseDuration: widget.reverseDuration ?? widget.duration,
       vsync: this,
     );
+    _animation = CurvedAnimation(parent: _controller, curve: widget.curve);
+    _tween = DecorationTween(begin: widget.decoration); //UI更新的时候提供end
   }
 
   @override
@@ -55,5 +59,30 @@ class AnimatedDecoratedBox1State extends State<AnimatedDecoratedBox1> with Singl
       },
       child: widget.child,
     );
+  }
+
+  @override
+  void didUpdateWidget(AnimatedDecoratedBox1 oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    //过渡动画
+    _controller.duration = widget.duration;
+    _controller.reverseDuration = widget.reverseDuration ?? widget.duration;
+    if (widget.curve != oldWidget.curve) {
+      _animation = CurvedAnimation(parent: _controller, curve: widget.curve);
+    }
+    if (widget.decoration != (_tween.end ?? _tween.begin)) {
+      _tween
+        ..begin = _tween.evaluate(_animation)
+        ..end = widget.decoration;
+      _controller
+        ..value = 0.0
+        ..forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
