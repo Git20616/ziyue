@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ziyue/chapter10/test_custom_paint.dart';
 import 'package:ziyue/chapter10/test_gradient_buttom.dart';
+import 'package:ziyue/chapter10/test_turn_box.dart';
 
 class Chapter10 extends StatelessWidget {
   @override
@@ -19,6 +21,22 @@ class Chapter10 extends StatelessWidget {
                 ));
               },
               child: Text("组合现有组件"),
+            ),
+            RaisedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => TestTurnBox(),
+                ));
+              },
+              child: Text("组合实例TurnBox"),
+            ),
+            RaisedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => TestCustomPaint(),
+                ));
+              },
+              child: Text("自绘组件CustomPaint"),
             ),
           ],
         ),
