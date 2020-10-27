@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ziyue/chapter10/test_custom_paint.dart';
 import 'package:ziyue/chapter10/test_gradient_buttom.dart';
+import 'package:ziyue/chapter10/test_gradient_circular_progress.dart';
 import 'package:ziyue/chapter10/test_turn_box.dart';
 
 class Chapter10 extends StatelessWidget {
@@ -37,6 +38,14 @@ class Chapter10 extends StatelessWidget {
                 ));
               },
               child: Text("自绘组件CustomPaint"),
+            ),
+            RaisedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => TestGradientCircularProgress(),
+                ));
+              },
+              child: Text("自绘实例-渐变进度条"),
             ),
           ],
         ),

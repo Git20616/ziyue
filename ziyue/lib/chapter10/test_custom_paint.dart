@@ -12,7 +12,7 @@ class TestCustomPaint extends StatelessWidget {
       body: Center(
         child: CustomPaint(
           size: Size(280, 280),
-          painter: MyPaint(),
+          painter: MyPaint(),//背景画笔，会显示在子节点后面，如需显示再子节点前，考虑前景画笔foregroundPainter
         ),
       ),
     );

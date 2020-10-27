@@ -244,8 +244,10 @@ class TextAndFormTestState extends State<TextAndFormTest> {
                               if ((_formKey.currentState as FormState)
                                   .validate()) {
                                 // 验证通过，提交数据
-                                _uname = "_unameController.text";
-                                _pword = "_pwordController.text";
+                                // _uname = "_unameController.text";
+                                // _pword = "_pwordController.text";
+                                _uname = _unameController.text;
+                                _pword = _pwordController.text;
                                 print("u: $_uname, p: $_pword");
                               }
                             },

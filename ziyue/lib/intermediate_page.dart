@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ziyue/chapter11/chapter11.dart';
 import 'package:ziyue/chapter8/chapter8.dart';
 import 'package:ziyue/chapter9/chapter9.dart';
 
@@ -38,6 +39,14 @@ class IntermediatePage extends StatelessWidget {
               ));
             },
             child: Text("自定义组件"),
+          ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => Chapter11(),
+              ));
+            },
+            child: Text("文件操作与网络请求"),
           ),
         ],
       ),
