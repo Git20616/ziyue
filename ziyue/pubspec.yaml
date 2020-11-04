@@ -27,6 +27,8 @@ dependencies:
   path_provider: ^0.4.1
   dio: ^3.0.10
   web_socket_channel: ^1.1.0
+  camera: ^0.5.7+1
+  webview_flutter: ^0.3.15
 
 dev_dependencies:
   flutter_test:

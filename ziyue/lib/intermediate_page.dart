@@ -5,6 +5,7 @@ import 'package:ziyue/chapter8/chapter8.dart';
 import 'package:ziyue/chapter9/chapter9.dart';
 
 import 'chapter10/chapter10.dart';
+import 'chapter13/chapter13.dart';
 
 class IntermediatePage extends StatelessWidget {
   @override
@@ -56,6 +57,13 @@ class IntermediatePage extends StatelessWidget {
               ));
             },
             child: Text("package与插件"),
+          ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => Chapter13(),
+              ));
+            },
           ),
         ],
       ),
