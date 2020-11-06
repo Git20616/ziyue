@@ -42,11 +42,11 @@ class _CameraExampleState extends State<CameraExample>
     //inactive:用户可见，但不可响应用户操作
     //paused:已经暂停了，用户不可见、不可操作
     //suspending：应用被挂起，此状态IOS永远不会回调
-    if(state == AppLifecycleState.resumed) {
-      if(controller != null) {
+    if (state == AppLifecycleState.resumed) {
+      if (controller != null) {
         // TODO 摄像头选中回调
       }
-    } else if(state == AppLifecycleState.inactive) {
+    } else if (state == AppLifecycleState.inactive) {
       controller?.dispose();
     }
   }
@@ -55,7 +55,9 @@ class _CameraExampleState extends State<CameraExample>
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(title: Text("相机示例"),),
+      appBar: AppBar(
+        title: Text("相机示例"),
+      ),
       body: Column(
         children: <Widget>[
           Expanded(
@@ -68,7 +70,7 @@ class _CameraExampleState extends State<CameraExample>
 
   /// 展示预览窗口
   Widget _cameraPreviewWidget() {
-    if(controller == null || !controller.value.isInitialized) {
+    if (controller == null || !controller.value.isInitialized) {
       return const Text("选择一个摄像头");
     } else {
       return AspectRatio(
@@ -85,10 +87,42 @@ class _CameraExampleState extends State<CameraExample>
 
   String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
 
+  void showInSnackBar(String message) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message),));
+  }
+
+  void _showCameraException(CameraException e) {
+    logError(e.code, e.description);
+    showInSnackBar("Error: ${e.code}, ${e.description}");
+  }
+
   //摄像头选中回调
   void onNewCameraSelected(CameraDescription cameraDescription) async {
+    if (controller != null) {
+      await controller.dispose();
+    }
+    controller = CameraController(cameraDescription, ResolutionPreset.high,
+        enableAudio: enableAudio);
 
+    controller.addListener(() {
+      if(mounted) { //手动刷新页面
+        setState(() {
+
+        });
+      }
+      if(controller.value.hasError) {
+        showInSnackBar("Camera error: ${controller.value.errorDescription}");
+      }
+    });
+
+    try {
+      await controller.initialize();
+    } on CameraException catch (e) {
+
+    }
   }
+
+
 
 }
 
