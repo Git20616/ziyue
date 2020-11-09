@@ -64,6 +64,7 @@ class IntermediatePage extends StatelessWidget {
                 builder: (context) => Chapter13(),
               ));
             },
+            child: Text("国际化"),
           ),
         ],
       ),
