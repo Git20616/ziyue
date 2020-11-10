@@ -139,6 +139,7 @@ class _CameraExampleState extends State<CameraExample>
               if (controller != null) {
                 onNewCameraSelected(controller.description);
               }
+              print("click toggle: $value");
             },
           ),
         ],
@@ -211,7 +212,7 @@ class _CameraExampleState extends State<CameraExample>
           color: Colors.red,
           onPressed: (controller != null &&
                   controller.value.isInitialized &&
-                  !controller.value.isRecordingVideo)
+                  controller.value.isRecordingVideo)
               ? onStopButtonPressed
               : null,
         ),
@@ -306,11 +307,10 @@ class _CameraExampleState extends State<CameraExample>
   void onVideoRecordButtonPressed() {
     startVideoRecording().then((String filePath) {
       if (mounted) {
-        setState(() {
-          if (filePath != null) {
-            showInSnackBar("视频保存在$filePath");
-          }
-        });
+        setState(() {});
+      }
+      if (filePath != null) {
+        showInSnackBar("视频保存在$filePath");
       }
     });
   }
@@ -319,11 +319,10 @@ class _CameraExampleState extends State<CameraExample>
   void onStopButtonPressed() {
     stopVideoRecording().then((_) {
       if (mounted) {
-        setState(() {
-          if (videoPath != null) {
-            showInSnackBar("视频保存与$videoPath");
-          }
-        });
+        setState(() {});
+      }
+      if (videoPath != null) {
+        showInSnackBar("视频保存与$videoPath");
       }
     });
   }
