@@ -30,6 +30,8 @@ dependencies:
   camera: ^0.5.7+1
   video_player: ^0.10.2
   webview_flutter: ^0.3.15
+  equatable: ^1.2.5
+  flutter_bloc: ^6.1.1
 
 dev_dependencies:
   flutter_test:
