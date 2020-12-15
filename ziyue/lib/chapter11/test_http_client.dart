@@ -37,7 +37,8 @@ class TestHttpClientState extends State<TestHttpClient> {
                       //1.创建一个HttpClient:
                       HttpClient httpClient = new HttpClient();
                       //2.打开Http连接，设置请求头：
-                      Uri uri = Uri(scheme: "https", host: "www.baidu.com");//Uri.parse("https://www.baidu.com");
+                      Uri uri = Uri(scheme: "https", host: "api.github.com", path: "users/Git20616");
+                      // Uri uri = Uri.parse("https://api.github.com/users/Git20616");
                       HttpClientRequest request =
                       await httpClient.getUrl(uri);
                       //使用iPhone的UA
