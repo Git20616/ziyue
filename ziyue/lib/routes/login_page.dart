@@ -11,29 +11,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final nameCtrl = new TextEditingController();
-  final pwdCtrl = new TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    nameCtrl.addListener(() {
-      print("${nameCtrl.text}");
-    });
-    pwdCtrl.addListener(() {
-      print("${pwdCtrl.text}");
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    // TODO 养成好习惯
-    nameCtrl?.removeListener(() {});
-    nameCtrl?.dispose();
-    pwdCtrl?.removeListener(() {});
-    pwdCtrl?.dispose();
-  }
+  String _name = "";
+  String _pwd = "";
+  final GlobalKey _formKey = new GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,17 +24,28 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
           if (state is LoginInitialState) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                nameTF(),
-                pwdTF(),
-                loginBtn(context, () {
-                  BlocProvider.of<LoginBloc>(context).add(LoginPressEvent(
-                      nameCtrl.text.trim(), pwdCtrl.text.trim()));
-                }),
-              ],
+            return Container(
+              height: 300,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      nameTF(),
+                      pwdTF(),
+                      Row(
+                        children: [
+                          Expanded(child: loginBtn(context)),
+                          Expanded(child: registerBtn()),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             );
           }
           if (state is LoginProgressState) {
@@ -79,7 +70,8 @@ class _LoginPageState extends State<LoginPage> {
                   RaisedButton(
                     onPressed: () {
                       setState(() {
-                        BlocProvider.of<LoginBloc>(context).add(LoginInitialEvent());
+                        BlocProvider.of<LoginBloc>(context)
+                            .add(LoginInitialEvent());
                       });
                     },
                     color: Theme.of(context).accentColor,
@@ -99,66 +91,62 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget nameTF() {
-    return Container(
-      height: 60,
-      margin: EdgeInsets.symmetric(horizontal: 50),
-      width: double.infinity,
-      child: TextField(
-        controller: nameCtrl,
-        decoration: InputDecoration(
-          fillColor: Color(0x30cccccc),
-          filled: true,
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0x00FF0000)),
-              borderRadius: BorderRadius.circular(100)),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0x00FF0000)),
-              borderRadius: BorderRadius.circular(100)),
-          hintText: "请输入用户名",
-        ),
+    return TextFormField(
+      autofocus: true,
+      decoration: InputDecoration(
+        labelText: "用户名",
+        hintText: "用户名或邮箱",
+        icon: Icon(Icons.person),
       ),
+      onSaved: (v) {
+        _name = v;
+      },
+      // 校验用户名
+      validator: (v) {
+        return v.trim().length > 0 ? null : "用户名不能为空";
+      },
     );
   }
 
   Widget pwdTF() {
-    return Container(
-      height: 60,
-      margin: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-      width: double.infinity,
-      child: TextField(
-        controller: pwdCtrl,
-        decoration: InputDecoration(
-          fillColor: Color(0x30cccccc),
-          filled: true,
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0x00FF0000)),
-              borderRadius: BorderRadius.circular(100)),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0x00FF0000)),
-              borderRadius: BorderRadius.circular(100)),
-          hintText: '请输入密码',
-        ),
-        obscureText: true,
+    return TextFormField(
+      obscureText: true,
+      onSaved: (v) {
+        _pwd = v;
+      },
+      decoration: InputDecoration(
+        labelText: "密码",
+        hintText: "您的登陆密码",
+        icon: Icon(Icons.lock),
       ),
+      // 校验密码
+      validator: (v) {
+        return v.trim().length > 5 ? null : "密码不能少于6位";
+      },
     );
   }
 
-  Widget loginBtn(BuildContext context, void Function() onPressed) {
-    return Container(
-      height: 50,
-      margin: EdgeInsets.symmetric(horizontal: 50),
-      width: double.infinity,
-      child: RaisedButton(
-        child: Text(
-          '登录',
-          style: TextStyle(fontSize: 16, color: Colors.white),
-        ),
-        color: Theme.of(context).accentColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(100),
-        ),
-        onPressed: onPressed,
-      ),
+  Widget loginBtn(BuildContext context) {
+    return RaisedButton(
+      padding: EdgeInsets.all(15.0),
+      child: Text("登录"),
+      color: Theme.of(context).primaryColor,
+      textColor: Colors.white,
+      onPressed: () {
+        FormState _state = _formKey.currentState as FormState;
+        if (_state.validate()) {
+          _state.save();
+          BlocProvider.of<LoginBloc>(context).add(LoginPressEvent(_name, _pwd));
+        }
+      },
+    );
+  }
+
+  Widget registerBtn() {
+    return RaisedButton(
+      padding: EdgeInsets.all(15.0),
+      child: Text("注册"),
+      onPressed: () {},
     );
   }
 }

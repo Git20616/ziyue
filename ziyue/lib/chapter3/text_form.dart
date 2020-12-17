@@ -202,6 +202,9 @@ class TextAndFormTestState extends State<TextAndFormTest> {
                   children: <Widget>[
                     TextFormField(
                       autofocus: false,
+                      onSaved: (v) {
+                        _uname = v;
+                      },
                       decoration: InputDecoration(
                         labelText: "用户名",
                         hintText: "用户名或邮箱",
@@ -214,6 +217,9 @@ class TextAndFormTestState extends State<TextAndFormTest> {
                     ),
                     TextFormField(
                       obscureText: true,
+                      onSaved: (v) {
+                        _pword = v;
+                      },
                       decoration: InputDecoration(
                         labelText: "密码",
                         hintText: "您的登陆密码",
@@ -241,13 +247,11 @@ class TextAndFormTestState extends State<TextAndFormTest> {
 //                              print(Form.of(context)); //null
 
                               // 但是，这里可以通过_formKey.currentState 获取FormState
-                              if ((_formKey.currentState as FormState)
-                                  .validate()) {
+                              FormState _state =
+                                  _formKey.currentState as FormState;
+                              if (_state.validate()) {
                                 // 验证通过，提交数据
-                                // _uname = "_unameController.text";
-                                // _pword = "_pwordController.text";
-                                _uname = _unameController.text;
-                                _pword = _pwordController.text;
+                                _state.save();
                                 print("u: $_uname, p: $_pword");
                               }
                             },
