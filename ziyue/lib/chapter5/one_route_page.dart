@@ -34,7 +34,9 @@ class OneRoutePageState extends State<OneRoutePage>
           //导航栏右侧菜单
           IconButton(
             icon: Icon(Icons.share),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
         ],
         // 如果给Scaffold添加了抽屉菜单，默认情况下Scaffold会自动将AppBar的leading设置为菜单按钮，点击它便可打开抽屉菜单。
