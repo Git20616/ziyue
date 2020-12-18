@@ -81,203 +81,206 @@ class TextAndFormTestState extends State<TextAndFormTest> {
         appBar: AppBar(
           title: Text("输入框与表单"),
         ),
-        body: Column(
-          children: <Widget>[
-            TextField(
-              autofocus: false,
-              decoration: InputDecoration(
-                labelText: "用户名",
-                hintText: "用户名或邮箱",
-                prefixIcon: Icon(Icons.person),
-              ),
-              onChanged: (v) {
-                // 监听文本变化
-                print("onchange: $v");
-              },
-              controller: _unameController,
-            ),
-            TextField(
-              controller: _pwordController,
-              decoration: InputDecoration(
-                labelText: "密码",
-                hintText: "您的登录密码",
-                prefixIcon: Icon(Icons.lock),
-              ),
-              obscureText: true,
-            ),
-            TextField(
-              controller: _selectionController,
-            ),
-            TextField(
-              autofocus: true,
-              focusNode: _focusNode1,
-              decoration: InputDecoration(
-                labelText: "输入框1",
-              ),
-            ),
-            TextField(
-              autofocus: false,
-              focusNode: _focusNode2,
-              decoration: InputDecoration(
-                labelText: "输入框2",
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                RaisedButton(
-                  child: Text("移动焦点"),
-                  onPressed: () {
-                    // 这是一种写法 FocusScope.of(context).requestFocus(focusNode2);
-                    // 第二种写法
-                    if (null == _focusScopeNode) {
-                      _focusScopeNode = FocusScope.of(context);
-                    }
-                    _focusScopeNode.requestFocus(_focusNode2);
-                  },
-                  color: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-                RaisedButton(
-                  child: Text("隐藏键盘"),
-                  onPressed: () {
-                    // 当所有输入框都失去焦点时，键盘就会收起
-                    _focusNode1.unfocus();
-                    _focusNode2.unfocus();
-                  },
-                  color: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-              ],
-            ),
-            TextField(
-              decoration: InputDecoration(
-                labelText: "自定义输入框",
-                hintText: "提示文字",
-                prefixIcon: Icon(Icons.pets),
-                // 未获得焦点时，下划线设置为橙色
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.orange),
-                ),
-                // 获得焦点时，下划线设置为绿色
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.green),
-                ),
-                // 如何在不使用enabledBorder和focusedBorder的情况下来自定义下滑线颜色呢？
-                // 答案在Theme中↑↑
-              ),
-            ),
-            // 可以隐藏掉TextField本身的下划线，然后通过Container去嵌套定义样式
-            Container(
-              child: TextField(
-                focusNode: _focusNode3,
-                keyboardType: TextInputType.emailAddress,
+        body: SingleChildScrollView(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            children: <Widget>[
+              TextField(
+                autofocus: false,
                 decoration: InputDecoration(
-                  labelText: "Email",
-                  hintText: "电子邮件地址",
-                  prefixIcon: Icon(Icons.email),
-                  border: InputBorder.none, //隐藏下划线
+                  labelText: "用户名",
+                  hintText: "用户名或邮箱",
+                  prefixIcon: Icon(Icons.person),
+                ),
+                onChanged: (v) {
+                  // 监听文本变化
+                  print("onchange: $v");
+                },
+                controller: _unameController,
+              ),
+              TextField(
+                controller: _pwordController,
+                decoration: InputDecoration(
+                  labelText: "密码",
+                  hintText: "您的登录密码",
+                  prefixIcon: Icon(Icons.lock),
+                ),
+                obscureText: true,
+              ),
+              TextField(
+                controller: _selectionController,
+              ),
+              TextField(
+                autofocus: true,
+                focusNode: _focusNode1,
+                decoration: InputDecoration(
+                  labelText: "输入框1",
                 ),
               ),
-              decoration: BoxDecoration(
-                // 下划线浅灰色，宽度1像素
-//                border: Border(bottom: BorderSide(color: Colors.grey[200], width: 1.0)),
-                // 定义圆角框
-                border: Border.all(color: _underlineColor, width: 1.0),
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              TextField(
+                autofocus: false,
+                focusNode: _focusNode2,
+                decoration: InputDecoration(
+                  labelText: "输入框2",
+                ),
               ),
-              margin: EdgeInsets.all(5.0),
-            ),
-            // TODO Form
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-              child: Form(
-                key: _formKey, //设置GlobalKey，用于后面获取FormState
-                autovalidate: false, //是否开启自动校验
-                child: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      autofocus: false,
-                      onSaved: (v) {
-                        _uname = v;
-                      },
-                      decoration: InputDecoration(
-                        labelText: "用户名",
-                        hintText: "用户名或邮箱",
-                        icon: Icon(Icons.person),
-                      ),
-                      // 校验用户名
-                      validator: (v) {
-                        return v.trim().length > 0 ? null : "用户名不能为空";
-                      },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  RaisedButton(
+                    child: Text("移动焦点"),
+                    onPressed: () {
+                      // 这是一种写法 FocusScope.of(context).requestFocus(focusNode2);
+                      // 第二种写法
+                      if (null == _focusScopeNode) {
+                        _focusScopeNode = FocusScope.of(context);
+                      }
+                      _focusScopeNode.requestFocus(_focusNode2);
+                    },
+                    color: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    TextFormField(
-                      obscureText: true,
-                      onSaved: (v) {
-                        _pword = v;
-                      },
-                      decoration: InputDecoration(
-                        labelText: "密码",
-                        hintText: "您的登陆密码",
-                        icon: Icon(Icons.lock),
-                      ),
-                      // 校验密码
-                      validator: (v) {
-                        return v.trim().length > 5 ? null : "密码不能少于6位";
-                      },
+                  ),
+                  RaisedButton(
+                    child: Text("隐藏键盘"),
+                    onPressed: () {
+                      // 当所有输入框都失去焦点时，键盘就会收起
+                      _focusNode1.unfocus();
+                      _focusNode2.unfocus();
+                    },
+                    color: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: RaisedButton(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text("登录"),
-                            color: Theme.of(context).primaryColor,
-                            textColor: Colors.white,
-                            onPressed: () {
-                              // 这里不能通过Form.of(context)获取FormState
-                              // 原因是，此处的context为TextAndFormTest的context，
-                              // 而Form.of(context)是根据所指定context向根去查找，
-                              // 而FormState是在FormTestRoute的子树中，所以不行。
-                              // 正确的做法是通过Builder来构建登录按钮，Builder会将widget节点的context作为回调参数
+                  ),
+                ],
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "自定义输入框",
+                  hintText: "提示文字",
+                  prefixIcon: Icon(Icons.pets),
+                  // 未获得焦点时，下划线设置为橙色
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.orange),
+                  ),
+                  // 获得焦点时，下划线设置为绿色
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.green),
+                  ),
+                  // 如何在不使用enabledBorder和focusedBorder的情况下来自定义下滑线颜色呢？
+                  // 答案在Theme中↑↑
+                ),
+              ),
+              // 可以隐藏掉TextField本身的下划线，然后通过Container去嵌套定义样式
+              Container(
+                child: TextField(
+                  focusNode: _focusNode3,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                    hintText: "电子邮件地址",
+                    prefixIcon: Icon(Icons.email),
+                    border: InputBorder.none, //隐藏下划线
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  // 下划线浅灰色，宽度1像素
+//                border: Border(bottom: BorderSide(color: Colors.grey[200], width: 1.0)),
+                  // 定义圆角框
+                  border: Border.all(color: _underlineColor, width: 1.0),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                ),
+                margin: EdgeInsets.all(5.0),
+              ),
+              // TODO Form
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                child: Form(
+                  key: _formKey, //设置GlobalKey，用于后面获取FormState
+                  autovalidate: false, //是否开启自动校验
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        autofocus: false,
+                        onSaved: (v) {
+                          _uname = v;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "用户名",
+                          hintText: "用户名或邮箱",
+                          icon: Icon(Icons.person),
+                        ),
+                        // 校验用户名
+                        validator: (v) {
+                          return v.trim().length > 0 ? null : "用户名不能为空";
+                        },
+                      ),
+                      TextFormField(
+                        obscureText: true,
+                        onSaved: (v) {
+                          _pword = v;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "密码",
+                          hintText: "您的登陆密码",
+                          icon: Icon(Icons.lock),
+                        ),
+                        // 校验密码
+                        validator: (v) {
+                          return v.trim().length > 5 ? null : "密码不能少于6位";
+                        },
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: RaisedButton(
+                              padding: EdgeInsets.all(15.0),
+                              child: Text("登录"),
+                              color: Theme.of(context).primaryColor,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                // 这里不能通过Form.of(context)获取FormState
+                                // 原因是，此处的context为TextAndFormTest的context，
+                                // 而Form.of(context)是根据所指定context向根去查找，
+                                // 而FormState是在FormTestRoute的子树中，所以不行。
+                                // 正确的做法是通过Builder来构建登录按钮，Builder会将widget节点的context作为回调参数
 //                              print(Form.of(context)); //null
 
-                              // 但是，这里可以通过_formKey.currentState 获取FormState
-                              FormState _state =
-                                  _formKey.currentState as FormState;
-                              if (_state.validate()) {
-                                // 验证通过，提交数据
-                                _state.save();
-                                print("u: $_uname, p: $_pword");
-                              }
-                            },
+                                // 但是，这里可以通过_formKey.currentState 获取FormState
+                                FormState _state =
+                                _formKey.currentState as FormState;
+                                if (_state.validate()) {
+                                  // 验证通过，提交数据
+                                  _state.save();
+                                  print("u: $_uname, p: $_pword");
+                                }
+                              },
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          // 通过Builder来获取RaisedButton所在widget树的真正context(Element)
-                          child: Builder(
-                            builder: (context) {
-                              return RaisedButton(
-                                padding: EdgeInsets.all(15.0),
-                                child: Text("登录二"),
-                                onPressed: () {
-                                  if (Form.of(context).validate()) {}
-                                },
-                              );
-                            },
+                          Expanded(
+                            // 通过Builder来获取RaisedButton所在widget树的真正context(Element)
+                            child: Builder(
+                              builder: (context) {
+                                return RaisedButton(
+                                  padding: EdgeInsets.all(15.0),
+                                  child: Text("登录二"),
+                                  onPressed: () {
+                                    if (Form.of(context).validate()) {}
+                                  },
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

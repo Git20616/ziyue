@@ -517,113 +517,115 @@ class SomeDialog extends StatelessWidget {
         builder: (BuildContext context) {
           return Padding(
             padding: EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                RaisedButton(
-                  onPressed: () async {
-                    //弹出对话框并等待其关闭
-                    bool delete = await showDeleteConfirmDialog();
-                    if (delete == null) {
-                      print("取消操作");
-                    } else {
-                      if (delete) {
-                        print("确认删除");
-                        //执行删除操作
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  RaisedButton(
+                    onPressed: () async {
+                      //弹出对话框并等待其关闭
+                      bool delete = await showDeleteConfirmDialog();
+                      if (delete == null) {
+                        print("取消操作");
                       } else {
-                        print("取消删除");
+                        if (delete) {
+                          print("确认删除");
+                          //执行删除操作
+                        } else {
+                          print("取消删除");
+                        }
                       }
-                    }
-                  },
-                  child: Text("AlertDialog"),
-                ),
-                RaisedButton(
-                  onPressed: () => changeLanguage(),
-                  child: Text("SimpleDialog"),
-                ),
-                RaisedButton(
-                  onPressed: () => showListDialog(),
-                  child: Text("ListDialog"),
-                ),
-                RaisedButton(
-                  onPressed: () => showCustomDialog(),
-                  child: Text("自定义弹出动画与遮罩"),
-                ),
-                RaisedButton(
-                  onPressed: () async {
-                    int _state = await showDialogCheckbox();
-                    if (_state != null) {
-                      print("$_state");
-                    } else {
-                      print("取消操作");
-                    }
-                  },
-                  child: Text("#1单独抽离出StatefulWidget"),
-                ),
-                RaisedButton(
-                  onPressed: () async {
-                    int _state = await showDialogCheckbox2();
-                    if (_state != null) {
-                      print("$_state");
-                    } else {
-                      print("取消操作");
-                    }
-                  },
-                  child: Text("#2自定义StatefulBuilder"),
-                ),
-                RaisedButton(
-                  onPressed: () async {
-                    int _state = await showDialogCheckbox3();
-                    if (_state != null) {
-                      print("$_state");
-                    } else {
-                      print("取消操作");
-                    }
-                  },
-                  child: Text("#3对话框状态管理最优解"),
-                ),
-                RaisedButton(
-                  onPressed: () async {
-                    int type = await _showModalBottomSheet();
-                    print(type);
-                  },
-                  child: Text("底部菜单列表1"),
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    _controller = _showBottomSheet(context);
-                    _controller.closed.then((v) {
-                      // TODO 回调方法中，值为什么是null
-                      print("$v");
-                    });
-                  },
-                  child: Text("底部菜单列表2"),
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    _showLoadingDialog();
-                  },
-                  child: Text("Loading框1"),
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    _showLoadingDialog2();
-                  },
-                  child: Text("Loading框2"),
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    _showDatePicker1();
-                  },
-                  child: Text("Material风格的日历选择器"),
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    _showDatePicker2();
-                  },
-                  child: Text("iOS风格的日历选择器"),
-                ),
-              ],
+                    },
+                    child: Text("AlertDialog"),
+                  ),
+                  RaisedButton(
+                    onPressed: () => changeLanguage(),
+                    child: Text("SimpleDialog"),
+                  ),
+                  RaisedButton(
+                    onPressed: () => showListDialog(),
+                    child: Text("ListDialog"),
+                  ),
+                  RaisedButton(
+                    onPressed: () => showCustomDialog(),
+                    child: Text("自定义弹出动画与遮罩"),
+                  ),
+                  RaisedButton(
+                    onPressed: () async {
+                      int _state = await showDialogCheckbox();
+                      if (_state != null) {
+                        print("$_state");
+                      } else {
+                        print("取消操作");
+                      }
+                    },
+                    child: Text("#1单独抽离出StatefulWidget"),
+                  ),
+                  RaisedButton(
+                    onPressed: () async {
+                      int _state = await showDialogCheckbox2();
+                      if (_state != null) {
+                        print("$_state");
+                      } else {
+                        print("取消操作");
+                      }
+                    },
+                    child: Text("#2自定义StatefulBuilder"),
+                  ),
+                  RaisedButton(
+                    onPressed: () async {
+                      int _state = await showDialogCheckbox3();
+                      if (_state != null) {
+                        print("$_state");
+                      } else {
+                        print("取消操作");
+                      }
+                    },
+                    child: Text("#3对话框状态管理最优解"),
+                  ),
+                  RaisedButton(
+                    onPressed: () async {
+                      int type = await _showModalBottomSheet();
+                      print(type);
+                    },
+                    child: Text("底部菜单列表1"),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      _controller = _showBottomSheet(context);
+                      _controller.closed.then((v) {
+                        // TODO 回调方法中，值为什么是null
+                        print("$v");
+                      });
+                    },
+                    child: Text("底部菜单列表2"),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      _showLoadingDialog();
+                    },
+                    child: Text("Loading框1"),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      _showLoadingDialog2();
+                    },
+                    child: Text("Loading框2"),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      _showDatePicker1();
+                    },
+                    child: Text("Material风格的日历选择器"),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      _showDatePicker2();
+                    },
+                    child: Text("iOS风格的日历选择器"),
+                  ),
+                ],
+              ),
             ),
           );
         },

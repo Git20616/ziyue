@@ -16,7 +16,7 @@ class Chapter3 extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("基础组件"),
+        title: Text("c3-基础组件"),
       ),
       body: Center(
         child: Column(
